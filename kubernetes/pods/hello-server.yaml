@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-server
+  labels:
+    app: hello-server
+spec:
+  containers:
+    - name: hello-server
+      image: 192.168.2.6:5000/hello-server:latest
+      ports:
+        - name: http
+          containerPort: 8080
+        - name: admin
+          containerPort: 8081
+      resources:
+        limits:
+          cpu: 0.2
+          memory: "100Mi"
+      livenessProbe:
+        httpGet:
+          path: /healthcheck
+          port: 8081
+        initialDelaySeconds: 60
+        periodSeconds: 10

@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "hello-server"
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: hello-server
+    spec:
+      containers:
+        - name: hello-server
+          image: 192.168.2.6:5000/hello-server:latest
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: admin
+              containerPort: 8081
+          resources:
+            limits:
+              cpu: 0.2
+              memory: "100Mi"
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: 8081
+            initialDelaySeconds: 60
+            periodSeconds: 10
