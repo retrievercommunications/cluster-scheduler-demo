@@ -1,0 +1,3 @@
+# Ensure the Unix gradle wrapper always has LF endings, otherwise they may be converted to CRLF endings when committed from a Windows machine and will prevent the Docker container from being able to execute the script
+gradlew text eol=lf
+gradlew.bat text eol=cflr
