@@ -14,10 +14,11 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
+# Generate the build artifacts for each of the apps
 script:
-  - (cd apps/hello-server && ./gradlew check)
+  - (cd apps/hello-server && ./gradlew build)
 
-# Push the updated image(s) to Docker Hub
+# If all of the builds were successful, then push the updated images to Docker Hub
 after_success:
   - docker build -t retriever/hello-server apps/hello-server;
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
