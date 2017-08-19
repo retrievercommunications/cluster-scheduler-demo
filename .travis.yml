@@ -1,0 +1,29 @@
+language: java
+
+services:
+  - docker
+
+# Avoid uploading the cache after every build.
+# See https://docs.travis-ci.com/user/languages/java/#Caching for more information
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
+# Generate the build artifacts for each of the apps
+script:
+  - (cd apps/hello-server && ./gradlew build)
+
+# If all of the builds were successful, then push the updated images to Docker Hub
+after_success:
+  - docker build -t retriever/hello-server apps/hello-server;
+    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker push retriever/hello-server;
+    if [ "$TRAVIS_TAG" =~ ^[0.9.]+$ ]; then
+    docker tag retriever/hello-server retriever/hello-server:$TRAVIS_TAG;
+    docker push retriever/hello-server:$TRAVIS_TAG;
+    fi
