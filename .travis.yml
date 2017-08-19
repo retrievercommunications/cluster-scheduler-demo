@@ -20,10 +20,12 @@ script:
 
 # If all of the builds were successful, then push the updated images to Docker Hub
 after_success:
-  - docker build -t retriever/hello-server apps/hello-server;
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker build -t retriever/hello-server apps/hello-server;
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
     docker push retriever/hello-server;
     if [ "$TRAVIS_TAG" =~ "^[0.9.]+$" ]; then
     docker tag retriever/hello-server retriever/hello-server:$TRAVIS_TAG;
     docker push retriever/hello-server:$TRAVIS_TAG;
+    fi
     fi
