@@ -1,2 +1,2 @@
-greetingLimit: 10
-defaultName: "World"
+greetingLimit: ${HELLO_SERVER_GREETING_LIMIT}
+defaultName: ${HELLO_SERVER_DEFAULT_NAME}
