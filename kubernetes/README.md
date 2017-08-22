@@ -10,11 +10,11 @@ TODO:
 
 To spin up a single pod hosting the hello-server application:
 
-	kubectl create -f pods/hello-server.yaml
+	kubectl create -f pods/hello-server.yml
 
 To expose the pod on the minikube VM:
 	
-	kubectl create -f services/hello-server.yaml
+	kubectl create -f services/hello-server.yml
 
 To test that the application is running and accessible:
 
@@ -26,7 +26,7 @@ To remove the pod:
 
 To spin up multiple instances of the pod based on the deployment configuration:
 	
-	kubectl create -f deployments/hello-server.yaml
+	kubectl create -f deployments/hello-server.yml
 
 To check that the pods will restart when the liveness health-checks are failing, set the "greetingLimit" in /apps/hello-server/config.yml to a very low number, and send multiple requests to the /hello endpoint using the service defined above. When the greetingLimit is reached, the applications healthcheck endpoint will begin to return error responses, at which point Kubernetes will automatically restart it. To check how many times the pod has been restarted, run the following command:
 
