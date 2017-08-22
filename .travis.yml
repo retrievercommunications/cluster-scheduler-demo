@@ -19,13 +19,13 @@ script:
   - (cd apps/hello-server && ./gradlew build)
 
 after_success:
-  - if test $TRAVIS_BRANCH == "master" -o echo "$TRAVIS_TAG" | grep -q "^[0.9.]+$"; then
+  - if [ $TRAVIS_BRANCH == "master" ] || [[ "$TRAVIS_TAG" =~ ^[0.9.]+$ ]]; then
       docker build -t retriever/hello-server apps/hello-server;
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-      if test $TRAVIS_BRANCH == "master"; then
+      if [ $TRAVIS_BRANCH == "master" ]; then
         docker push retriever/hello-server;
       fi
-      if echo "$TRAVIS_TAG" | grep -q "^[0.9.]+$"; then
+      if [[ "$TRAVIS_TAG" ~= ^[0.9.]+$ ]]; then
         docker tag retriever/hello-server retriever/hello-server:$TRAVIS_TAG;
         docker push retriever/hello-server:$TRAVIS_TAG;
       fi
