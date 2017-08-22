@@ -19,15 +19,12 @@ script:
   - (cd apps/hello-server && ./gradlew build)
 
 after_success:
-  # If the branch is master or the commit is tagged, then we need to build a new docker image
   - if test $TRAVIS_BRANCH == "master" -o echo "$TRAVIS_TAG" | grep -q "^[0.9.]+$"; then
       docker build -t retriever/hello-server apps/hello-server;
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-      # If the branch is master, we're pushing the new image as the new 'latest' 
       if test $TRAVIS_BRANCH == "master"; then
         docker push retriever/hello-server;
       fi
-      # If the commit is tagged, we're pushing using the provided tag instead/as well
       if echo "$TRAVIS_TAG" | grep -q "^[0.9.]+$"; then
         docker tag retriever/hello-server retriever/hello-server:$TRAVIS_TAG;
         docker push retriever/hello-server:$TRAVIS_TAG;
