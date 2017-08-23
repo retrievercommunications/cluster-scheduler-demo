@@ -2,7 +2,7 @@
     "containerDefinitions": [
       {
         "name": "hello-server",
-        "image": "retriever/hello-server:1.0",
+        "image": "retriever/hello-server:1.1",
         "memory": 128,
         "portMappings": [
             {
@@ -14,6 +14,16 @@
                 "hostPort": 8081,
                 "containerPort": 8081,
                 "protocol": "tcp"
+            }
+        ],
+        "environment": [
+            {
+              "name": "HELLO_SERVER_GREETING_LIMIT",
+              "value": "10"
+            },
+            {
+                "name": "HELLO_SERVER_DEFAULT_NAME",
+                "value": "ECS World"
             }
         ],
         "essential": true
