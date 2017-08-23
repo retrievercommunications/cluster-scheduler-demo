@@ -52,9 +52,9 @@ Create a cluster named 'default'
 
 Create an EC2 instance and add to cluster
 
-//TODO the official instructions say to use the console which is not great
-// should use the ECS optimised AMIs called 'Amazon ECS-optimized AMI'
-// need to make sure your EC2 instance has the AIM role ecsInstanceRole otherwise it won't be able to join the cluster
+    //TODO 
+    Should use the ECS optimised AMIs called 'Amazon ECS-optimized AMI'
+    Make sure your EC2 instance has the AIM role ecsInstanceRole otherwise it won't be able to join the cluster
 
 
 ### Running the Container using AWS CLI
@@ -63,9 +63,9 @@ Register a task definiton
 
     aws ecs register-task-definition --cli-input-json file://tasks/hello-server.json
 
-// note if you want to modify the task definition json file and
-// then you can re-register the task and it will automatically create a new version of the task in the same family
-// when you run, just make sure you specify the right version number
+**Note**: If you want to modify the task definition json file, then you can re-register the task using the same command as above. 
+It will automatically create a new version of the task in the same family.
+When you run, just make sure you specify the right version number.
 
 Run the task
 
@@ -73,10 +73,11 @@ Run the task
 
 After a little while your container should be deployed and start running.
 
-//TODO normally people will put a load balancer in front so you wouldn't need to know the EC2 instance that it was deployed to.
-You can go to view the Public DNS or IP in the EC2 console and then put ":8080/hello" at the end and open in a browser.
+To access the demo app you'll need to go to view the Public DNS or IP of the single instance in the cluster in the EC2 console and then put ":8080/hello" at the end and open in a browser.
 
     e.g. http://ec2-52-63-164-215.ap-southeast-2.compute.amazonaws.com:8080/hello
+
+**Note**: Normally people will put a load balancer in front so you wouldn't need to know the EC2 instance that it was deployed to.
 
 If successful you should see:
 
