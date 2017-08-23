@@ -6,6 +6,11 @@ TODO:
 	- setup instructions for minikube
 	- setup and configuration for a private registry? (should instead just host the images publically on Docker Hub)
 
+To set up on GKE:
+- Create a container cluster
+- Configure kubectl to use the cluster: kubectl config set-cluster <cluster-name>
+- When the service is running, get an external IP to use for the curl request using: gcloud compute instances list 
+
 ## Usage
 
 To spin up the Config Map defining all of the variables used by the hello-server:
