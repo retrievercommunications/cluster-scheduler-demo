@@ -8,6 +8,10 @@ TODO:
 
 ## Usage
 
+To spin up the Config Map defining all of the variables used by the hello-server:
+
+	kubectl create -f config_maps/hello-server.yml 
+
 To spin up a single pod hosting the hello-server application:
 
 	kubectl create -f pods/hello-server.yml

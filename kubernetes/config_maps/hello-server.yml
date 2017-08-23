@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hello-server-config
+  namespace: default
+data:
+  greetingLimit: "10"
+  defaultName: "World"

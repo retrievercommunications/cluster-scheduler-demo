@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: hello-server
-          image: retriever/hello-server:latest
+          image: retriever/hello-server:1.1
           ports:
             - name: http
               containerPort: 8080
@@ -27,3 +27,14 @@ spec:
               port: 8081
             initialDelaySeconds: 60
             periodSeconds: 10
+          env:
+            - name: HELLO_SERVER_GREETING_LIMIT
+              valueFrom:
+                configMapKeyRef:
+                  name: hello-server-config
+                  key: greetingLimit
+            - name: HELLO_SERVER_DEFAULT_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: hello-server-config
+                  key: defaultName

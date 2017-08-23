@@ -27,6 +27,10 @@ import au.com.retriever.hello.healthchecks.GreetingLimitHealthCheck;
 import au.com.retriever.hello.rest.filters.GreetingLimitFilter;
 import au.com.retriever.hello.rest.resources.HelloResource;
 import io.dropwizard.Application;
+import io.dropwizard.configuration.ConfigurationSourceProvider;
+import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
+import io.dropwizard.configuration.SubstitutingSourceProvider;
+import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
 public class HelloApplication extends Application<HelloConfiguration> 
@@ -39,6 +43,15 @@ public class HelloApplication extends Application<HelloConfiguration>
 	public String getName() 
 	{
 		return APP_NAME;
+	}
+	
+	@Override
+	public void initialize(Bootstrap<HelloConfiguration> bootstrap) 
+	{
+		// Enable variable substitution with environment variables
+		ConfigurationSourceProvider configSourceProvider = bootstrap.getConfigurationSourceProvider();
+		SubstitutingSourceProvider environmentSourceProvider = new SubstitutingSourceProvider(configSourceProvider, new EnvironmentVariableSubstitutor());
+		bootstrap.setConfigurationSourceProvider(environmentSourceProvider);
 	}
 	
 	@Override
