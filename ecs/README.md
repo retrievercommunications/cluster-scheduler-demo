@@ -4,20 +4,20 @@
 
 To deploy containers to ECS, there are atleast 3 official ways using:
 
-    1. AWS Web Console - this is ok for the first time but not that suitable if you want to version control your files and use in a team environment.
-    2. [AWS CLI](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_AWSCLI.html) - this is the 'ecs' subcommand in the standard AWS cli
-    3. [ECS CLI](https://github.com/aws/amazon-ecs-cli) This seemed like the nicest experience but currently it doesn't suppport windows so it has not been chosen.
+1. AWS Web Console - this is ok for the first time but not that suitable if you want to version control your files and use in a team environment.
+2. [AWS CLI](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_AWSCLI.html) - this is the 'ecs' subcommand in the standard AWS cli
+3. [ECS CLI](https://github.com/aws/amazon-ecs-cli) This seemed like the nicest experience but currently it doesn't suppport windows so it has not been chosen.
 
 ## Required Amazon Background Info
 
 In order to deploy to Amazon ECS, you unfortunately need to understand quite a bit of the AWS jargon.
 Here is a very quick intro:
 
-    * EC2: A VM which runs in your cluster to containers get deployed to. You need to choose an AMI for your EC2 instance.
-    * AMI: Amazon Machine Image: a VM image containing the Operating System and any other required software
-    * EC2 Instance Type: pick 't2.micro' this is one of the smallest and it is included in free-tier and for a demo is plenty
-    * IAM Role - a set of permissions to access things within AWS. 
-    * Security Group (ASG) - basically firewall rules for your ECS instance which tells which ports to open. by default only SSH is open inbound and all ports are open outbound. You'll need to open any ports that your container exposes on the host.
+* EC2: A VM which runs in your cluster to containers get deployed to. You need to choose an AMI for your EC2 instance.
+* AMI: Amazon Machine Image: a VM image containing the Operating System and any other required software
+* EC2 Instance Type: pick 't2.micro' this is one of the smallest and it is included in free-tier and for a demo is plenty
+* IAM Role - a set of permissions to access things within AWS. 
+* Security Group (ASG) - basically firewall rules for your ECS instance which tells which ports to open. by default only SSH is open inbound and all ports are open outbound. You'll need to open any ports that your container exposes on the host.
 
 ## ECS Concepts
 
