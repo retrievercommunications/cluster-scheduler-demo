@@ -1,12 +1,12 @@
 apply plugin: "java"
 apply plugin: "application"
+apply plugin: 'com.github.johnrengelman.shadow'
+
+mainClassName = "au.com.retriever.hello.HelloApplication"
 
 repositories {
     mavenCentral()
 }
-
-def dropwizardVersion = "1.1.2"
-mainClassName = "au.com.retriever.hello.HelloApplication"
 
 dependencies {
     compile "io.dropwizard:dropwizard-core:${dropwizardVersion}"
@@ -16,14 +16,25 @@ run {
     args 'server', 'config.yml'
 }
 
-jar {
-	doFirst {
-		from (configurations.runtime.resolve().collect { it.isDirectory() ? it : zipTree(it) }) {
-			exclude 'META-INF/MANIFEST.MF'
-			exclude 'META-INF/*.SF'
-			exclude 'META-INF/*.DSA'
-			exclude 'META-INF/*.RSA'
-		}
+// Required for shadowJar plugin
+buildscript {
+	repositories {
+		jcenter()
 	}
-    manifest { attributes "Main-Class": "${mainClassName}" }
- }
+	dependencies {
+		classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+	}
+}
+
+// Configure the shadow jar task
+shadowJar {
+   mergeServiceFiles()
+    exclude 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.SF'
+    manifest {
+        attributes 'Implementation-Title': rootProject.name
+        attributes 'Implementation-Version': rootProject.version
+        attributes 'Implementation-Vendor-Id': rootProject.group
+        attributes 'Created-By': 'Gradle ' + gradle.gradleVersion
+        attributes 'Main-Class': mainClassName
+    }
+}
