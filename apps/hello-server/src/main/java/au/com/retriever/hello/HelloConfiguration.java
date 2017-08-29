@@ -31,11 +31,15 @@ import io.dropwizard.Configuration;
 
 public class HelloConfiguration extends Configuration
 {
-	@NotEmpty
-	private String defaultName;
+	/* Defines the default value that is returned in a /hello response if no name parameter is provided */
+	private String defaultName = "World";
 	
-	@NotNull
-	private Integer greetingLimit;
+	/* Defines the number of /hello requests the server can respond to before its health-checks fail */
+	private Integer greetingLimit = 10;
+	
+	/* Defines an identifier for the server which is added to the Server response header, which can be used 
+	 * to determine which instance served a request when accessed through a load balancer. */
+	private String identifier = "";
 	
 	@JsonProperty
 	public String getDefaultName()
@@ -59,5 +63,17 @@ public class HelloConfiguration extends Configuration
 	public void setGreetingLimit(Integer greetingLimit)
 	{
 		this.greetingLimit = greetingLimit;
+	}
+	
+	@JsonProperty
+	public String getIdentifier()
+	{
+		return this.identifier;
+	}
+	
+	@JsonProperty
+	public void setIdentifier(String serverName)
+	{
+		this.identifier = serverName;
 	}
 }

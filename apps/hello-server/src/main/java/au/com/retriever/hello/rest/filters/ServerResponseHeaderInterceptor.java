@@ -1,4 +1,4 @@
-package au.com.retriever.hello.rest.resources;
+package au.com.retriever.hello.rest.filters;
 /**	Copyright (C) 2017 Retriever Communications
  *	
  *	Permission is hereby granted, free of charge, to any person obtaining
@@ -21,42 +21,28 @@ package au.com.retriever.hello.rest.resources;
  *	WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.io.IOException;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerResponseContext;
+import javax.ws.rs.container.ContainerResponseFilter;
 
 import org.eclipse.jetty.http.HttpHeader;
 
-import au.com.retriever.hello.rest.filters.GreetingLimitFilter.Limited;
-import au.com.retriever.hello.rest.representations.MessageRepresentation;
-import io.dropwizard.jersey.params.NonEmptyStringParam;
-
-@Path("/hello")
-@Produces(MediaType.APPLICATION_JSON)
-@Limited
-public class HelloResource
+public class ServerResponseHeaderInterceptor implements ContainerResponseFilter
 {
-	private String defaultName;
-	private AtomicInteger greetingCounter;
-
-	public HelloResource(String defaultName, AtomicInteger greetingCounter)
+	private String serverIdentifier;
+	
+	public ServerResponseHeaderInterceptor(String serverIdentifier) 
 	{
-		this.defaultName = defaultName;
-		this.greetingCounter = greetingCounter;
+		this.serverIdentifier = serverIdentifier;
 	}
 	
-	@GET
-	public Response sayHello(@QueryParam("name") NonEmptyStringParam nameParam)
+	@Override
+	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
+			throws IOException 
 	{
-		greetingCounter.getAndIncrement();
-		
-		String name = nameParam.get().orElse(this.defaultName);
-		
-		return Response.ok().entity(new MessageRepresentation("Hello, " + name + "!")).build();
+		responseContext.getHeaders()
+			.add(HttpHeader.SERVER.asString(), this.serverIdentifier);
 	}
 }
