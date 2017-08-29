@@ -26,6 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import au.com.retriever.hello.healthchecks.GreetingLimitHealthCheck;
 import au.com.retriever.hello.rest.filters.GreetingLimitFilter;
 import au.com.retriever.hello.rest.resources.HelloResource;
+import au.com.retriever.hello.rest.resources.VersionResource;
 import io.dropwizard.Application;
 import io.dropwizard.configuration.ConfigurationSourceProvider;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -36,6 +37,7 @@ import io.dropwizard.setup.Environment;
 public class HelloApplication extends Application<HelloConfiguration> 
 {
 	private static final String APP_NAME = "hello-app";
+	private static final String VERSION = "1.2";
 	
 	private final AtomicInteger greetingCounter = new AtomicInteger();
 	
@@ -63,9 +65,11 @@ public class HelloApplication extends Application<HelloConfiguration>
 		GreetingLimitHealthCheck limitHealthCheck = new GreetingLimitHealthCheck(this.greetingCounter, greetingLimit);
 		GreetingLimitFilter limitFilter = new GreetingLimitFilter(limitHealthCheck);
 		HelloResource helloResource = new HelloResource(defaultName, this.greetingCounter);
+		VersionResource versionResource = new VersionResource(VERSION);
 		
 		environment.jersey().register(limitFilter);
 		environment.jersey().register(helloResource);
+		environment.jersey().register(versionResource);
 		environment.healthChecks().register("limit", limitHealthCheck);
 	}
 	
