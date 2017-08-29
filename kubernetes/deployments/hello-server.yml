@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: hello-server
-          image: retriever/hello-server:1.1
+          image: retriever/hello-server:1.2
           ports:
             - name: http
               containerPort: 8080
@@ -21,6 +21,12 @@ spec:
             limits:
               cpu: 0.5
               memory: "200Mi"
+          readinessProbe:
+            httpGet:
+              path: /version
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /healthcheck
