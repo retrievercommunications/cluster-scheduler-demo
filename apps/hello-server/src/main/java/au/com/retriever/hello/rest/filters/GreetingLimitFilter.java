@@ -22,7 +22,10 @@ package au.com.retriever.hello.rest.filters;
  */
 
 import java.io.IOException;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
+import javax.ws.rs.NameBinding;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -39,6 +42,10 @@ import au.com.retriever.hello.rest.representations.MessageRepresentation;
 @Provider
 public class GreetingLimitFilter implements ContainerRequestFilter
 {
+	@NameBinding
+	@Retention(RetentionPolicy.RUNTIME)
+	public @interface Limited {}
+	
 	private static final Integer TOO_MANY_REQUESTS_STATUS_CODE = 429;
 	private static final String INTERNAL_SERVER_ERROR_MESSAGE = "The server has encountered an internal error and is unable to complete your request";
 	
