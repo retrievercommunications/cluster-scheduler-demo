@@ -21,8 +21,6 @@ package au.com.retriever.hello;
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -32,14 +30,15 @@ import io.dropwizard.Configuration;
 public class HelloConfiguration extends Configuration
 {
 	/* Defines the default value that is returned in a /hello response if no name parameter is provided */
-	private String defaultName = "World";
+	@NotEmpty
+    private String defaultName;
 	
 	/* Defines the number of /hello requests the server can respond to before its health-checks fail */
-	private Integer greetingLimit = 10;
+	private Integer greetingLimit;
 	
 	/* Defines an identifier for the server which is added to the Server response header, which can be used 
 	 * to determine which instance served a request when accessed through a load balancer. */
-	private String identifier = "";
+	private String identifier;
 	
 	@JsonProperty
 	public String getDefaultName()

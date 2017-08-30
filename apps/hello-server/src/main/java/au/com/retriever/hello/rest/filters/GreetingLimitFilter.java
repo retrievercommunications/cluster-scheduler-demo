@@ -36,10 +36,12 @@ import javax.ws.rs.ext.Provider;
 import com.codahale.metrics.health.HealthCheck.Result;
 
 import au.com.retriever.hello.healthchecks.GreetingLimitHealthCheck;
+import au.com.retriever.hello.rest.filters.GreetingLimitFilter.Limited;
 import au.com.retriever.hello.rest.representations.MessageRepresentation;
 
 
 @Provider
+@Limited
 public class GreetingLimitFilter implements ContainerRequestFilter
 {
 	@NameBinding

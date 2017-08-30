@@ -53,7 +53,7 @@ public class HelloApplication extends Application<HelloConfiguration>
 	{
 		// Enable variable substitution with environment variables
 		ConfigurationSourceProvider configSourceProvider = bootstrap.getConfigurationSourceProvider();
-		SubstitutingSourceProvider environmentSourceProvider = new SubstitutingSourceProvider(configSourceProvider, new EnvironmentVariableSubstitutor());
+		SubstitutingSourceProvider environmentSourceProvider = new SubstitutingSourceProvider(configSourceProvider, new EnvironmentVariableSubstitutor(false));
 		bootstrap.setConfigurationSourceProvider(environmentSourceProvider);
 	}
 	
