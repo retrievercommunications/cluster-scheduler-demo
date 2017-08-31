@@ -4,9 +4,9 @@ The hello-client is a simple Go client for the hello-server that polls a given U
 
 ## Getting started
 
-Build the hello-client executable
+Build the hello-client executable.
 
-	go build -o hello-client
+	make
 
 Start an instance of the client by passing in an endpoint URL, along with an optional flag defining the poll period (in milliseconds)
 
@@ -17,7 +17,7 @@ Start an instance of the client by passing in an endpoint URL, along with an opt
 Build a hello-client executable that is compatible with the scratch image by running the Makefile.
 For Windows users, the `make` command can be added to an existing installation of Git Bash by following [these instructions](https://gist.github.com/evanwill/0207876c3243bbb6863e65ec5dc3f058).
 
-	make
+	make docker-hello-client
 
 Create the docker image
 
