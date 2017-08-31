@@ -1,4 +1,4 @@
-# hello-app
+# hello-server
 
 The hello-server is a simple Dropwizard application that can be used for demo purposes.
 
