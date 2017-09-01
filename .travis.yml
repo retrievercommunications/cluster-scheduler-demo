@@ -42,7 +42,7 @@ matrix:
         - 1.8.x
 
       script:
-        - (cd apps/hello-client && make)
+        - (cd apps/hello-client && make docker-hello-client)
 
       after_success:
         - if [ "$TRAVIS_BRANCH" == "master" ] || [[ "$TRAVIS_TAG" =~ ^[0-9.]+$ ]]; then
