@@ -38,7 +38,7 @@ import io.dropwizard.setup.Environment;
 public class HelloApplication extends Application<HelloConfiguration> 
 {
 	private static final String APP_NAME = "hello-app";
-	private static final String VERSION = "1.3";
+	private static final String VERSION = "1.4";
 	
 	private final AtomicInteger greetingCounter = new AtomicInteger();
 	
